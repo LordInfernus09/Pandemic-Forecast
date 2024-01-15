@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Covid-19 Cases</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 80%; margin: auto;">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <div style="width: 80%; margin: auto; margin-top: 20px;">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>New Cases</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fetch data from the Python API endpoint
+        fetch('http://127.0.0.1:5000/api/data')
+            .then(response => response.json())
+            .then(data => {
+                // Use the fetched data for labels and values
+                var labels = Object.keys(data);
+                var values = Object.values(data);
+
+                // Create a bar chart
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Daily Cases Over 7-Day Period',
+                            data: values,
+                            backgroundColor: 'rgba(201, 26, 58, 0.4)',
+                            borderColor: 'rgba(201, 26, 58, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                // Populate the table with labels and values
+                var tableBody = document.getElementById('tableBody');
+                for (var i = 0; i < labels.length; i++) {
+                    var row = tableBody.insertRow(i);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    cell1.innerHTML = labels[i];
+                    cell2.innerHTML = values[i];
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>

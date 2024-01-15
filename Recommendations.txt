@@ -1,0 +1,8 @@
+Including a feature such as the number of people recently recovered may help provide
+insight as to why the daily cases seem to follow a trend of high spikes in infections
+followed by a period of low infection. This feature should be limited to only include data as far back as
+around two months prior to the day being predicted as this would account for those still
+under the effects of antibodies produced after recovering from the disease. Another possible
+feature could be the death rate as the number of people who can contract the disease will be
+reduced. Lastly, the number of people travelling out of lock-downs might also provide insight
+into the infection rate assuming that periods of high infection correspond to periods following relaxed restrictions.
